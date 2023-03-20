@@ -1,0 +1,26 @@
+﻿@using ballmer_peak_blazor_server.Data;
+@using ballmer_peak_blazor_server.Model;
+
+@page "/users"
+@inject UserService UserService;
+
+<PageTitle>Ballmer Peak - Users</PageTitle>
+
+<h1>List of users</h1>
+
+<ul class="users">
+@foreach(var user in users) {
+    <li class="users__entry">
+        <a class="nav-link" href="@($"users/{user.Id}")">@user.Name</a>
+    </li>
+}
+</ul>
+
+@code {
+    private IEnumerable<User> users = Array.Empty<User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetAllAsync();
+    }
+}

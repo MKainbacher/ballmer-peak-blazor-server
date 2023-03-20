@@ -1,0 +1,24 @@
+﻿@using ballmer_peak_blazor_server.Data;
+@using ballmer_peak_blazor_server.Model;
+@using Newtonsoft.Json;
+
+@page "/users/{userId}";
+@inject UserService UserService;
+
+<h1>UserDetail</h1>
+
+<pre>@JsonConvert.SerializeObject(user, new JsonSerializerSettings() {Formatting = Formatting.Indented})</pre>
+
+<a href="users">Back</a>
+
+@code {
+    [Parameter]
+    public string? UserId { get; set; }
+
+    private User? user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetByIdAsync(UserId!);
+    }
+}
